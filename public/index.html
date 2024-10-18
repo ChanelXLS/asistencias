@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Asistencia</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Registro de Asistencia</h1>
+  <form id="asistenciaForm">
+    <label for="idClase">ID Clase:</label>
+    <input type="text" id="idClase" name="idClase" required>
+    
+    <label for="idEstudiante">ID Estudiante:</label>
+    <input type="text" id="idEstudiante" name="idEstudiante" required>
+
+    <label for="fecha">Fecha:</label>
+    <input type="date" id="fecha" name="fecha" required>
+
+    <label for="presente">Presente:</label>
+    <select id="presente" name="presente" required>
+      <option value="1">Sí</option>
+      <option value="0">No</option>
+    </select>
+
+    <button type="submit">Registrar Asistencia</button>
+  </form>
+
+  <script>
+    document.getElementById('asistenciaForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const idClase = document.getElementById('idClase').value;
+      const idEstudiante = document.getElementById('idEstudiante').value;
+      const fecha = document.getElementById('fecha').value;
+      const presente = document.getElementById('presente').value;
+
+      const response = await fetch('http://localhost:3000/api/asistencia/registrar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idClase, idEstudiante, fecha, presente })
+      });
+
+      const data = await response.json();
+      alert(data.message);
+    });
+  </script>
+</body>
+</html>
